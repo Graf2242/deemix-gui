@@ -7,6 +7,7 @@ import { sessionDZ } from '../../../app'
 import { isObjectEmpy } from '../../../helpers/primitive-checks'
 import { BadRequestError, isBadRequestError } from '../../../helpers/errors'
 import { logger } from '../../../helpers/logger'
+import { Logform } from 'winston'
 
 export interface RawChartTracksQuery {
 	id: string
@@ -17,6 +18,7 @@ export interface RawChartTracksQuery {
 const path: ApiHandler['path'] = '/getChartTracks'
 
 const handler: RequestHandler<{}, {}, {}, RawChartTracksQuery> = async (req, res, next) => {
+	logger.info('getChartTracks')
 	try {
 		if (!sessionDZ[req.session.id]) sessionDZ[req.session.id] = new Deezer()
 		const dz = sessionDZ[req.session.id]

@@ -2,6 +2,7 @@
 import { Deezer } from 'deezer-js'
 import { ApiHandler } from '../../../types'
 import { sessionDZ } from '../../../app'
+import { logger } from '../../../helpers/logger'
 
 const path: ApiHandler['path'] = '/mainSearch'
 
@@ -100,6 +101,7 @@ const emptyResult = {
 }
 
 const handler: ApiHandler['handler'] = async (req, res) => {
+	logger.info('mainSearch')
 	if (!sessionDZ[req.session.id]) sessionDZ[req.session.id] = new Deezer()
 	const dz = sessionDZ[req.session.id]
 

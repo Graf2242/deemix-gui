@@ -1,8 +1,10 @@
+import { logger } from '../../../helpers/logger'
 import { ApiHandler } from '../../../types'
 
 const path: ApiHandler['path'] = '/getUserSpotifyPlaylists'
 
 const handler: ApiHandler['handler'] = async (req, res) => {
+	logger.info('getUserSpotifyPlaylists')
 	let data
 	const deemix = req.app.get('deemix')
 

@@ -7,6 +7,7 @@ import { logger } from '../../../helpers/logger'
 const path: ApiHandler['path'] = '/retryDownload'
 
 const handler: ApiHandler['handler'] = async (req, res) => {
+	logger.info('retryDownload')
 	if (!sessionDZ[req.session.id]) sessionDZ[req.session.id] = new Deezer()
 	const deemix = req.app.get('deemix')
 	const dz = sessionDZ[req.session.id]

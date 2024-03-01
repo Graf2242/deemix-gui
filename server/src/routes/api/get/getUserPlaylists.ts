@@ -2,10 +2,13 @@
 import { Deezer } from 'deezer-js'
 import { ApiHandler } from '../../../types'
 import { sessionDZ } from '../../../app'
+import { log } from 'console'
+import { logger } from '../../../helpers/logger'
 
 const path: ApiHandler['path'] = '/getUserPlaylists'
 
 const handler: ApiHandler['handler'] = async (req, res) => {
+	logger.info('getUserPlaylists')
 	if (!sessionDZ[req.session.id]) sessionDZ[req.session.id] = new Deezer()
 	const dz = sessionDZ[req.session.id]
 	let data

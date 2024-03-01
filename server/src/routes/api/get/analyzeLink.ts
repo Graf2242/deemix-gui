@@ -6,6 +6,7 @@ import { Deezer } from 'deezer-js'
 
 import type { ApiHandler, GetTrackResponse, GetAlbumResponse } from '../../../types'
 import { sessionDZ } from '../../../app'
+import { logger } from '../../../helpers/logger'
 
 export interface AnalyzeQuery {
 	term?: string
@@ -16,6 +17,7 @@ type ResBody = GetAlbumResponse | GetTrackResponse
 const path: ApiHandler['path'] = '/analyzeLink'
 
 const handler: RequestHandler<ResBody, {}, {}, AnalyzeQuery> = async (req, res) => {
+	logger.info('analyzeLink')
 	try {
 		if (!req.query || !req.query.term) {
 			return res.status(400).send({ errorMessage: 'No term specified', errorCode: 'AL01' })

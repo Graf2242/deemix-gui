@@ -1,8 +1,10 @@
+import { logger } from '../../../helpers/logger'
 import { ApiHandler } from '../../../types'
 
 const path = '/removeFromQueue'
 
 const handler: ApiHandler['handler'] = (req, res) => {
+	logger.info('removeFromQueue')
 	const deemix = req.app.get('deemix')
 	const { uuid } = req.query
 	if (uuid) {

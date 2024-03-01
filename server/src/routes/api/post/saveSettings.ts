@@ -1,3 +1,4 @@
+import { logger } from '../../../helpers/logger'
 import { ApiHandler, Settings, SpotifySettings } from '../../../types'
 
 const path = '/saveSettings'
@@ -8,6 +9,7 @@ export interface SaveSettingsData {
 }
 
 const handler: ApiHandler['handler'] = (req, res) => {
+	logger.info('saveSettings')
 	const deemix = req.app.get('deemix')
 	const { settings, spotifySettings }: SaveSettingsData = req.query
 	deemix.saveSettings(settings, spotifySettings)

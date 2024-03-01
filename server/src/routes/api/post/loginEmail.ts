@@ -1,10 +1,12 @@
 import { ApiHandler } from '../../../types'
 import { getAccessToken, getArlFromAccessToken } from '../../../app'
 import { saveLoginCredentials } from '../../../helpers/loginStorage'
+import { logger } from '../../../helpers/logger'
 
 const path = '/loginEmail'
 
 const handler: ApiHandler['handler'] = async (req, res) => {
+	logger.info('loginEmail')
 	const isSingleUser = req.app.get('isSingleUser')
 	const { email, password } = req.body
 	let accessToken = req.body.accessToken

@@ -9,6 +9,7 @@ const path: ApiHandler['path'] = '/connect'
 let update: any = null
 
 const handler: ApiHandler['handler'] = async (req, res) => {
+	logger.info('connect')
 	if (!sessionDZ[req.session.id]) sessionDZ[req.session.id] = new Deezer()
 	const dz = sessionDZ[req.session.id]
 	const deemix = req.app.get('deemix')

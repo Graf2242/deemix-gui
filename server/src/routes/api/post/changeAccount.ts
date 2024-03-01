@@ -4,6 +4,7 @@ import { Deezer } from 'deezer-js'
 
 import { ApiHandler } from '../../../types'
 import { sessionDZ } from '../../../app'
+import { logger } from '../../../helpers/logger'
 
 const path: ApiHandler['path'] = '/changeAccount'
 
@@ -12,6 +13,7 @@ interface ChangeAccountQuery {
 }
 
 const handler: RequestHandler<{}, {}, {}, ChangeAccountQuery> = (req, res) => {
+	logger.info('changeAccount')
 	if (!req.query || !req.query.child) {
 		return res.status(400).send({ errorMessage: 'No child specified', errorCode: 'CA01' })
 	}

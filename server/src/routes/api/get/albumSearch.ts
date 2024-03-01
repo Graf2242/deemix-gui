@@ -4,6 +4,7 @@ import { Deezer } from 'deezer-js'
 
 import type { ApiHandler } from '../../../types'
 import { sessionDZ } from '../../../app'
+import { logger } from '../../../helpers/logger'
 
 export interface RawAlbumQuery {
 	term: string
@@ -24,6 +25,7 @@ export interface AlbumResponse {
 const path: ApiHandler['path'] = '/album-search/'
 
 const handler: RequestHandler<{}, {}, {}, RawAlbumQuery> = async (req, res) => {
+	logger.info('album search')
 	if (!sessionDZ[req.session.id]) sessionDZ[req.session.id] = new Deezer()
 	const dz = sessionDZ[req.session.id]
 
