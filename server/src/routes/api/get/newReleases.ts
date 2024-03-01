@@ -56,7 +56,14 @@ const apiHandler: ApiHandler = { path, handler }
 export default apiHandler
 
 async function channelNewReleases(dz: any, channelName: string): Promise<any[]> {
-	const channelData = await dz.gw.get_page(channelName)
+	let channelData
+	try {
+		channelData = await dz.gw.get_page(channelName);
+	}
+	catch (error) {
+		console.error(`Caught error ${error}`); return [];
+	}
+
 	const re = /^New.*releases$/
 
 	const newReleases = channelData.sections.find((e: any) => re.test(e.title))
