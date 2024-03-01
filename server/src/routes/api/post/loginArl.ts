@@ -22,10 +22,13 @@ const LoginStatus = {
 const path: ApiHandler['path'] = '/loginArl'
 
 const handler: RequestHandler<{}, {}, RawLoginArlBody, {}> = async (req, res, _) => {
+	logger.info(`begin loginArl`)
 	if (!sessionDZ[req.session.id]) sessionDZ[req.session.id] = new Deezer()
 	const deemix = req.app.get('deemix')
 	const dz = sessionDZ[req.session.id]
 	const isSingleUser = req.app.get('isSingleUser')
+
+	logger.info(`loginArl: 1`)
 
 	if (!req.body) {
 		return res.status(400).send()
@@ -35,6 +38,8 @@ const handler: RequestHandler<{}, {}, RawLoginArlBody, {}> = async (req, res, _)
 		return res.status(400).send()
 	}
 
+	logger.info(`loginArl: 2`)
+
 	const loginParams: (string | number)[] = [req.body.arl]
 
 	// TODO Handle the child === 0 case, don't want to rely on the login_via_arl default param (it may change in the
@@ -42,6 +47,8 @@ const handler: RequestHandler<{}, {}, RawLoginArlBody, {}> = async (req, res, _)
 	if (req.body.child) {
 		loginParams.push(req.body.child)
 	}
+
+	logger.info(`loginArl: 3`)
 
 	let response
 
@@ -61,6 +68,9 @@ const handler: RequestHandler<{}, {}, RawLoginArlBody, {}> = async (req, res, _)
 		const testDz = new Deezer()
 		response = await testDz.login_via_arl(...loginParams)
 	}
+
+	logger.info(`loginArl: 4`)
+
 	if (response === LoginStatus.FAILED) sessionDZ[req.session.id] = new Deezer()
 	if (!(await deemix.isDeezerAvailable())) response = LoginStatus.NOT_AVAILABLE
 	const returnValue = {
@@ -71,6 +81,8 @@ const handler: RequestHandler<{}, {}, RawLoginArlBody, {}> = async (req, res, _)
 		currentChild: dz.selected_account
 	}
 
+	logger.info(`loginArl: 5`)
+
 	if (response !== LoginStatus.NOT_AVAILABLE && response !== LoginStatus.FAILED) {
 		deemix.startQueue(dz)
 		if (isSingleUser)
@@ -79,6 +91,8 @@ const handler: RequestHandler<{}, {}, RawLoginArlBody, {}> = async (req, res, _)
 				arl: returnValue.arl
 			})
 	} else if (isSingleUser) resetLoginCredentials()
+
+	logger.info(`loginArl: end`)
 	return res.status(200).send(returnValue)
 }
 

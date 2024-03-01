@@ -42,6 +42,7 @@ const handler: ApiHandler['handler'] = async (req, res) => {
 		result.queue = queue
 	}
 
+	logger.info(`end Connect`)
 	res.send(result)
 }
 
