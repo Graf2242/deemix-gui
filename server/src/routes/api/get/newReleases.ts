@@ -58,6 +58,7 @@ const apiHandler: ApiHandler = { path, handler }
 export default apiHandler
 
 async function channelNewReleases(dz: any, channelName: string): Promise<any[]> {
+	return [];
 	let channelData
 	try {
 		channelData = await dz.gw.get_page(channelName);
